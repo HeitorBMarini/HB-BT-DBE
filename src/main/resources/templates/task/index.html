@@ -7,6 +7,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body class="grey lighten-2">
@@ -15,9 +17,22 @@
         <div class="nav-wrapper">
             <a href="#" class="brand-logo">EpicTask</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li class="active"><a href="/task">pendentes</a></li>
-                <li><a href="#">concluídas</a></li>
-                <li><a href="#">usuários</a></li>
+                <li class="active"><a href="/task" th:text="#{task.pending}"></a></li>
+                <li><a href="#" th:text="#{task.done}"></a></li>
+                <li><a href="#" th:text="#{users}"></a></li>
+                <li>
+                    <!-- Dropdown Trigger -->
+                    <a class='dropdown-trigger' href='#' data-target='dropdown1'>
+                        <img class="avatar" th:src="${avatar_url}" alt="">
+                    </a>
+
+                    <!-- Dropdown Structure -->
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li><span th:text="${username}"></span></li>
+                        <li class="divider" tabindex="-1"></li>
+                        <li><a href="/logout"><i class="material-icons">logout</i>sair</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </nav>
@@ -43,14 +58,13 @@
                         <a th:href="${'/task/delete/' + task.id}" class="btn red">
                             <i class="material-icons">delete</i>
                         </a>
-
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="fixed-action-btn">
-            <a class="btn-floating btn-large blue">
+            <a href="/task/new" class="btn-floating btn-large blue">
                 <i class="large material-icons">add</i>
             </a>
         </div>
@@ -59,5 +73,16 @@
 
 
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.dropdown-trigger');
+        const options = {
+            coverTrigger: false,
+            constrainWidth: false
+        }
+        var instances = M.Dropdown.init(elems, options);
+    });
+</script>
 
 </html>
